@@ -10,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val viewModel : ItemsViewModel by viewModels()
+        // passando o factory na inicialização da viewModel
+        val viewModel : ItemsViewModel by viewModels {
+            ItemsViewModelFactory(applicationContext)
+        }
+//        val viewModel : ItemsViewModel by viewModels()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
