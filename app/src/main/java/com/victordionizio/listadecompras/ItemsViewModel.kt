@@ -3,6 +3,7 @@ package com.victordionizio.listadecompras
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.victordionizio.listadecompras.data.ItemEntity
 import com.victordionizio.listadecompras.data.ItemsDatabase
 import com.victordionizio.listadecompras.data.toModel
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,11 @@ class ItemsViewModel(private val database: ItemsDatabase) : ViewModel() {
     }
 
     fun addItem(name : String){
+        viewModelScope.launch(Dispatchers.IO){
+            val entity = ItemEntity(id = 0, name = name)
+            database.itemsDao().insert(entity)
+            fetchAll()
+        }
 
     }
 
