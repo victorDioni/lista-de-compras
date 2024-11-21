@@ -29,9 +29,17 @@ class ItemsViewModel(private val database: ItemsDatabase) : ViewModel() {
 
     }
 
+    private fun removeItem(item : ItemModel){
+        viewModelScope.launch(Dispatchers.IO){
+            val entity = item.toEntity()
+            database.itemsDao().delete(entity)
+            fetchAll()
+        }
+    }
+
     private suspend fun fetchAll(){
         val result = database.itemsDao().getAll().map {
-            it.toModel { onRemove = {} }
+            it.toModel(onRemove = :: removeItem)
         }
 
         itemsLiveData.postValue(result)

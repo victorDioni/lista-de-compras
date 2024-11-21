@@ -18,6 +18,7 @@ class ItemEntity (
 
 fun ItemEntity.toModel(onRemove : (ItemModel) -> Unit): ItemModel {
     return ItemModel(
+        id = this.id,
         name = this.name,
         onRemove = onRemove
     )
